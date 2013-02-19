@@ -93,15 +93,14 @@ for (sort keys %sym2node) {
 }
 for (sort keys %connections) {
     my ($n1,$n2) = /(\d+)\.(\d+)/;
-    #next if ($node2sym{$n1} =~ m/jbuf_/);
-    #next if ($node2sym{$n2} =~ m/jbuf_/);
-    next if (($node2sym{$n1} =~ m/jbuf_/) && ($node2sym{$n2} =~ m/jbuf_/));
-
     print df "   Node".$n1." -> Node".$n2." [dir=front,color=\"midnightblue\",fontsize=\"10\",style=\"solid\",fontname=\"FreeSans\"];\n";
 }
 
 #say Dumper(%file2nodes);
 
+## the below tries to place functions from the same file in a same rank
+## sometimes the dot layout is too vertical because of this.
+## hence we are only placing @ max 6 fn/s in the same rank
 for (sort keys %file2nodes) {
   print df "#file >> ".$_."\n";
   if ((@{$file2nodes{$_}}-1) < 6) {
